@@ -1,8 +1,13 @@
 type NodeType<T> = ListNode<T> | null;
 
+interface DebugResult<T> {
+  value: T; next: T | null; prev: T | null
+}
+
 interface ILinkedList<T> {
   toArray(): T[];
   append(val: T): void;
+  debug(): DebugResult<T>[]
 }
 
 class ListNode<T> {
@@ -61,7 +66,7 @@ export class LinkedList<T> implements ILinkedList<T> {
   }
 
   debug() {
-    const result: { value: T; next: T | null; prev: T | null }[] = [];
+    const result: DebugResult<T>[] = [];
     let current = this.head;
 
     while (current) {
