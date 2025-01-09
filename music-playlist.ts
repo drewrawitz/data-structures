@@ -10,6 +10,9 @@ type SongType = Song | null;
 
 interface IMusicPlayerList extends ILinkedList<Song> {
   getCurrentSong(): SongType;
+  getNextSong(): SongType;
+  getPreviousSong(): SongType;
+  goToNext(): SongType;
 }
 
 export class MusicPlayerList
@@ -18,6 +21,21 @@ export class MusicPlayerList
 {
   getCurrentSong(): SongType {
     return this.currentNode?.value ?? null;
+  }
+
+  getNextSong(): SongType {
+    return this.currentNode?.next?.value ?? null;
+  }
+
+  getPreviousSong(): SongType {
+    return this.currentNode?.prev?.value ?? null;
+  }
+
+  goToNext(): SongType {
+    const newNode = this.currentNode?.next ?? this.head;
+    this.currentNode = newNode;
+
+    return newNode!.value;
   }
 
   static fromArray(songs: Song[]): MusicPlayerList {
@@ -49,3 +67,9 @@ const samplePlaylist = MusicPlayerList.fromArray([
 ]);
 
 console.log("Current song:", samplePlaylist.getCurrentSong());
+console.log("Next song:", samplePlaylist.getNextSong());
+console.log("Previous song:", samplePlaylist.getPreviousSong());
+console.log("Moving to next song...", samplePlaylist.goToNext());
+console.log("Current song:", samplePlaylist.getCurrentSong());
+console.log("Next song:", samplePlaylist.getNextSong());
+console.log("Previous song:", samplePlaylist.getPreviousSong());
