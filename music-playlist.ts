@@ -13,6 +13,7 @@ interface IMusicPlayerList extends ILinkedList<Song> {
   getNextSong(): SongType;
   getPreviousSong(): SongType;
   goToNext(): SongType;
+  goToPrevious(): SongType;
 }
 
 export class MusicPlayerList
@@ -35,7 +36,14 @@ export class MusicPlayerList
     const newNode = this.currentNode?.next ?? this.head;
     this.currentNode = newNode;
 
-    return newNode!.value;
+    return this.getCurrentSong();
+  }
+
+  goToPrevious(): SongType {
+    const newNode = this.currentNode?.prev ?? this.tail;
+    this.currentNode = newNode;
+
+    return this.getCurrentSong();
   }
 
   static fromArray(songs: Song[]): MusicPlayerList {
@@ -49,27 +57,14 @@ export class MusicPlayerList
 }
 
 const samplePlaylist = MusicPlayerList.fromArray([
-  {
-    id: "1",
-    title: "Bohemian Rhapsody",
-    artist: "Queen",
-  },
-  {
-    id: "2",
-    title: "Hotel California",
-    artist: "Eagles",
-  },
-  {
-    id: "3",
-    title: "Sweet Child O Mine",
-    artist: "Guns N Roses",
-  },
+  { id: "1", title: "Bohemian Rhapsody", artist: "Queen" },
+  { id: "2", title: "Hotel California", artist: "Eagles" },
+  { id: "3", title: "Sweet Child O Mine", artist: "Guns N Roses" },
+  { id: "4", title: "Stairway to Heaven", artist: "Led Zeppelin" },
+  { id: "5", title: "Imagine", artist: "John Lennon" },
 ]);
 
 console.log("Current song:", samplePlaylist.getCurrentSong());
-console.log("Next song:", samplePlaylist.getNextSong());
-console.log("Previous song:", samplePlaylist.getPreviousSong());
-console.log("Moving to next song...", samplePlaylist.goToNext());
-console.log("Current song:", samplePlaylist.getCurrentSong());
-console.log("Next song:", samplePlaylist.getNextSong());
-console.log("Previous song:", samplePlaylist.getPreviousSong());
+console.log("Next song:", samplePlaylist.goToNext());
+console.log("Next song:", samplePlaylist.goToNext());
+console.log("Prev song:", samplePlaylist.goToPrevious());
