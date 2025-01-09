@@ -14,12 +14,19 @@ interface IMusicPlayerList extends ILinkedList<Song> {
   getPreviousSong(): SongType;
   goToNext(): SongType;
   goToPrevious(): SongType;
+  toggleShuffle(): void;
 }
 
 export class MusicPlayerList
   extends LinkedList<Song>
   implements IMusicPlayerList
 {
+  private isShuffle: boolean = false;
+
+  get isShuffleEnabled(): boolean {
+    return this.isShuffle;
+  }
+
   getCurrentSong(): SongType {
     return this.currentNode?.value ?? null;
   }
@@ -46,6 +53,10 @@ export class MusicPlayerList
     return this.getCurrentSong();
   }
 
+  toggleShuffle() {
+    this.isShuffle = !this.isShuffle;
+  }
+
   static fromArray(songs: Song[]): MusicPlayerList {
     const playlist = new MusicPlayerList();
     for (const song of songs) {
@@ -64,7 +75,11 @@ const samplePlaylist = MusicPlayerList.fromArray([
   { id: "5", title: "Imagine", artist: "John Lennon" },
 ]);
 
+console.log("Shuffle enabled:", samplePlaylist.isShuffleEnabled);
 console.log("Current song:", samplePlaylist.getCurrentSong());
 console.log("Next song:", samplePlaylist.goToNext());
 console.log("Next song:", samplePlaylist.goToNext());
 console.log("Prev song:", samplePlaylist.goToPrevious());
+console.log("Toggling Shuffle...");
+samplePlaylist.toggleShuffle();
+console.log("Shuffle enabled:", samplePlaylist.isShuffleEnabled);
