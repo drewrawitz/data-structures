@@ -1,13 +1,15 @@
 type NodeType<T> = ListNode<T> | null;
 
 interface DebugResult<T> {
-  value: T; next: T | null; prev: T | null
+  value: T;
+  next: T | null;
+  prev: T | null;
 }
 
-interface ILinkedList<T> {
+export interface ILinkedList<T> {
   toArray(): T[];
   append(val: T): void;
-  debug(): DebugResult<T>[]
+  debug(): DebugResult<T>[];
 }
 
 class ListNode<T> {
@@ -25,19 +27,12 @@ class ListNode<T> {
 export class LinkedList<T> implements ILinkedList<T> {
   head: NodeType<T>;
   tail: NodeType<T>;
+  currentNode: NodeType<T>;
 
   constructor() {
     this.head = null;
     this.tail = null;
-  }
-
-  static fromArray<T>(values: T[]) {
-    const list = new LinkedList<T>();
-    for (const val of values) {
-      list.append(val);
-    }
-
-    return list;
+    this.currentNode = null;
   }
 
   toArray() {
@@ -58,6 +53,7 @@ export class LinkedList<T> implements ILinkedList<T> {
     if (!this.head) {
       this.head = newNode;
       this.tail = newNode;
+      this.currentNode = newNode;
     } else {
       newNode.prev = this.tail;
       this.tail!.next = newNode;
@@ -81,7 +77,3 @@ export class LinkedList<T> implements ILinkedList<T> {
     return result;
   }
 }
-
-const list = LinkedList.fromArray([2, 3, 5]);
-console.log(list.debug());
-
