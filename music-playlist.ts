@@ -83,3 +83,5 @@ console.log("Prev song:", samplePlaylist.goToPrevious());
 console.log("Toggling Shuffle...");
 samplePlaylist.toggleShuffle();
 console.log("Shuffle enabled:", samplePlaylist.isShuffleEnabled);
+samplePlaylist.append({ id: "6", title: "Hey Jude", artist: "The Beatles" });
+console.log(samplePlaylist.debug());
